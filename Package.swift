@@ -6,36 +6,30 @@ import PackageDescription
 let package = Package(
     name: "GLFW",
     products: [
+        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "GLFW",
-            targets: ["GLFW"]),
+            targets: ["GLFW"]
+        )
     ],
     targets: [
         .target(
-            name: "GLFW"
-        ),
-        .testTarget(
-            name: "GLFWTests",
-            dependencies: ["GLFW"]),
-    ]
+            name: "GLFW",
+            cSettings: [
+                .define("_CRT_SECURE_NO_WARNINGS"),
+                .define("WIN32", .when(platforms: [.windows])),
+                .define("_GLFW_WIN32", .when(platforms: [.windows])),
+                .define("_GLFW_BUILD_DLL", .when(platforms: [.windows]))       
+            ],
+            linkerSettings: [
+                .linkedFramework("Cocoa", .when(platforms: [.macOS])),
+                .linkedFramework("IOKit", .when(platforms: [.macOS])),
+                .linkedFramework("CoreFoundation", .when(platforms: [.macOS])),
+                .linkedLibrary("OpenGL32", .when(platforms: [.windows])),
+                .linkedLibrary("Gdi32", .when(platforms: [.windows]))            
+            ]
+        )
+    ],
+    cLanguageStandard: .c99,
+    cxxLanguageStandard: .cxx11
 )
-
-#if os(Windows)
-
-package
-    .targets
-    .first { $0.name == "GLFW" }?
-    .exclude = [ 
-        "cocoa_time.h",
-        "cocoa_time.c",
-        "posix_thread.h",
-        "posix_module.c",
-        "posix_thread.c",
-        "posix_time.h",
-        "posix_thread.h",
-        "posix_module.c",
-        "posix_time.c",
-        "posix_thread.c"
-     ]
-
-#endif

@@ -1,5 +1,6 @@
 module GLFW [system] [extern_c] {
     header "glfw3.h"
     header "glfw3native.h"
+
     export *
 }
