@@ -1,7 +1,7 @@
 module GLFW [system] [extern_c] {
     header "glfw3.h"
     header "glfw3native.h"
-
-    link "OpenGL32.lib"
+    header "gl.h"
+    
     export *
 }
