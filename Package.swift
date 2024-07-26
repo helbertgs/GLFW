@@ -17,6 +17,8 @@ let package = Package(
             name: "GLFW",
             cSettings: [
                 .define("_CRT_SECURE_NO_WARNINGS"),
+                .define("APPLE", .when(platforms: [.macOS])),
+                .define("GLFW_BUILD_COCOA", .when(platforms: [.macOS])),
                 .define("WIN32", .when(platforms: [.windows])),
                 .define("_GLFW_WIN32", .when(platforms: [.windows])),
                 .define("_GLFW_BUILD_DLL", .when(platforms: [.windows]))       
